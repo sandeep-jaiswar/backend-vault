@@ -13,8 +13,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
+    const errorMsg = exception.message || 'Internal server error';
 
     response.status(status).json({
+      errorMsg,
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
